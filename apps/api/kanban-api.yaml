@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kanban-api
+data:
+  application.properties: |-
+    keycloak.auth-server-url: <TODO: enter>
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kanban-api
+  labels:
+    app: kanban-api
+spec:
+  ports:
+    - name: http
+      port: 3001
+      targetPort: 3001
+  selector:
+    app: kanban-api
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kanban-api
+  namespace: default
+  labels:
+    app: kanban-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kanban-api
+  template:
+    metadata:
+      labels:
+        app: kanban-api
+    spec:
+      containers:
+        - name: kanban-api
+          image: kanban-api:latest
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 3001
