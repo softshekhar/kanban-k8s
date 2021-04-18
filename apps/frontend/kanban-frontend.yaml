@@ -6,7 +6,9 @@ data:
   config.js: |
     window.ENV = {
         "API_URL": "<TODO: enter>",
-        "AUTH_URL": "<TODO: enter>"
+        "AUTH_URL": "<TODO: enter>",
+        "AUTH_REALM": "<TODO: enter>",
+        "AUTH_CLIENT_ID": "<TODO: enter>"
     }
 ---
 apiVersion: v1
