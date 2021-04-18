@@ -3,8 +3,11 @@ kind: ConfigMap
 metadata:
   name: kanban-api
 data:
-  application.properties: |-
-    keycloak.auth-server-url: <TODO: enter>
+  application.properties: |
+    keycloak.auth-server-url=http://192.168.64.5:30837/auth
+    keycloak.realm=kanban
+    keycloak.resource=a742dfd1-8540-4d2f-b870-064b33051bb3
+    keycloak.security-constraints[0].authRoles[0]=user
 ---
 apiVersion: v1
 kind: Service
@@ -45,3 +48,10 @@ spec:
           ports:
             - name: http
               containerPort: 3001
+          volumeMounts:
+            - name: kanban-api
+              mountPath: /workspace/config
+      volumes:
+        - name: kanban-api
+          configMap:
+            name: kanban-api
